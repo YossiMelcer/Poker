@@ -18,6 +18,13 @@ namespace Poker
             Suit = suit;
             Rank = rank;
         }
+
+        public string CardsToString()
+        {
+            string s = Suit.ToString();
+            string t = Rank.ToString();
+            return String.Join(s, t);
+        }
     }
 }
 
