@@ -7,13 +7,24 @@ namespace Poker
 {
     public class Deck
     {
-        public List<Card> listOfCards { get; }
+        public List<Card> ListOfCards { get; }
+
+        public int CurrentCard { get; private set; }
+
 
         public Deck()
         {
-            listOfCards = new List<Card>();
+            ListOfCards = new List<Card>();
             CreateDeck();
-            Shuffle(listOfCards);
+            Shuffle();
+            CurrentCard = 0;
+        }
+
+        public Card DrawCardFromDeck()
+        {
+            Card card = ListOfCards[CurrentCard];
+            CurrentCard++;
+            return card;
         }
 
 
@@ -24,25 +35,25 @@ namespace Poker
                 foreach (CardRank rank in Enum.GetValues(typeof(CardRank)))
                 {
                     Card card = new Card(suit, rank);
-                    listOfCards.Add(card);
+                    ListOfCards.Add(card);
                 }
             }
         }
         
 
-        private void Shuffle(List<Card> listOfCards)
+        private void Shuffle()
         {
             Random rnd = new Random();
-            int n = listOfCards.Count;
+            int n = ListOfCards.Count;
             for (int i = 0; i < n; i++)
             {
                 int j = i + rnd.Next(n - i);
-                Card tmp = listOfCards[j];
-                listOfCards[j] = listOfCards[i];
-                listOfCards[i] = tmp;
+                Card tmp = ListOfCards[j];
+                ListOfCards[j] = ListOfCards[i];
+                ListOfCards[i] = tmp;
             }
 
-            foreach(Card item in listOfCards)
+            foreach(Card item in ListOfCards)
             {
                 Console.WriteLine("{0} of {1}", item.Rank, item.Suit);
             }
