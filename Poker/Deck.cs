@@ -7,7 +7,7 @@ namespace Poker
 {
     public class Deck
     {
-        public List<Card> ListOfCards { get; }
+        public List<Card> ListOfCards { get; set; }
 
         public int CurrentCard { get; private set; }
 
@@ -53,11 +53,11 @@ namespace Poker
                 ListOfCards[i] = tmp;
             }
 
-            foreach(Card item in ListOfCards)
-            {
-                Console.WriteLine("{0} of {1}", item.Rank, item.Suit);
-            }
-
+            //foreach(Card item in ListOfCards)
+            //{
+            //    Console.WriteLine("{0} of {1}", item.Rank, item.Suit);
+            //}
+            //
             Console.ReadKey();
 
         }

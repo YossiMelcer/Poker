@@ -10,8 +10,8 @@ namespace Poker
 
     public class Card
     {
-        public CardSuit Suit { get; }
-        public CardRank Rank { get; }
+        public CardSuit Suit { get; set; }
+        public CardRank Rank { get; set; }
 
         public Card(CardSuit suit, CardRank rank)
         {
@@ -19,7 +19,7 @@ namespace Poker
             Rank = rank;
         }
 
-        public string CardsToString()
+        public string CardToString()
         {
             string s = Suit.ToString();
             string t = Rank.ToString();

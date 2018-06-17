@@ -21,7 +21,7 @@ namespace Poker
         {
             foreach(Card item in Hand)
             {
-                Console.WriteLine(item.CardsToString());
+                Console.WriteLine(item.CardToString());
             }
         }
         
