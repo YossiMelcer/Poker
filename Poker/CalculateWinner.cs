@@ -7,10 +7,14 @@ namespace Poker
 {
     class CalculateWinner
     {
+        Deck deck1 = new Deck();
 
-        //will make dummy "PlayerHand" to use here. PlayerHand means hand + community cards, just had nothing better to call it
+        Card card1 = deck1.DrawCardFromDeck();
+
+        private List<Card> PlayerHand = new List<Card>();
+        PlayerHand.Add(card1); 
         
-        public static int RoyalFlushCheck(List<Card> PlayerHand)
+        public static bool RoyalFlushCheck(List<Card> PlayerHand)
         {
             PlayerHand = PlayerHand.OrderBy(x => x.Suit).ThenBy(x => x.Rank).ToList();
 
@@ -18,12 +22,8 @@ namespace Poker
             {
                 Console.WriteLine("{0} of {1}", card.Rank, card.Suit);
             }
-
-
-
-            Console.ReadKey();
             
-            return 1;
+            return true;
         }
     }
 }
