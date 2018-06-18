@@ -53,12 +53,13 @@ namespace Poker
                 ListOfCards[i] = tmp;
             }
 
-            //foreach(Card item in ListOfCards)
-            //{
-            //    Console.WriteLine("{0} of {1}", item.Rank, item.Suit);
-            //}
-            //
-            Console.ReadKey();
+            foreach(Card item in ListOfCards)
+            {
+                Console.WriteLine("{0} of {1}", item.Rank, item.Suit);
+            }
+
+            Console.WriteLine();
+            Console.WriteLine();
 
         }
     }
