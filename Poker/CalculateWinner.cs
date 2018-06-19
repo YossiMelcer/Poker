@@ -33,7 +33,7 @@ namespace Poker
             PlayerHand.Add(card6);
             PlayerHand.Add(card7);
 
-            RoyalFlushCheck(PlayerHand);
+            StraightFlushCheck(PlayerHand);
         }
 
 
@@ -139,6 +139,26 @@ namespace Poker
             }
         }
 
-        public static bool 
+        public static bool StraightFlushCheck(List<Card> PlayerHand)
+        {
+            PlayerHand = PlayerHand.OrderBy(x => x.Suit).ThenBy(x => x.Rank).ToList();
+
+            foreach (Card card in PlayerHand)
+            {
+                Console.WriteLine("{0} of {1}", card.Rank, card.Suit);
+            }
+
+            Console.WriteLine();
+            Console.WriteLine();
+
+            var DiamondsList = PlayerHand.Where(s => s.Suit == CardSuit.Diamonds).ToList();
+            var HeartsList = PlayerHand.Where(s => s.Suit == CardSuit.Hearts).ToList();
+            var ClubsList = PlayerHand.Where(s => s.Suit == CardSuit.Clubs).ToList();
+            var SpadesList = PlayerHand.Where(s => s.Suit == CardSuit.Spades).ToList();
+
+
+
+            return false;
+        }
     }
 }
