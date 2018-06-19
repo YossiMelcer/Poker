@@ -33,7 +33,7 @@ namespace Poker
             PlayerHand.Add(card6);
             PlayerHand.Add(card7);
 
-            StraightFlushCheck(PlayerHand);
+            FullHouseCheck(PlayerHand);
         }
 
 
@@ -54,7 +54,7 @@ namespace Poker
             var ClubsList = PlayerHand.Where(s => s.Suit == CardSuit.Clubs).ToList();
             var SpadesList = PlayerHand.Where(s => s.Suit == CardSuit.Spades).ToList();
 
-            
+
             if ((DiamondsList.Count()) >= 5)
             {
                 var RoyalFlushTest = DiamondsList.Where(card => card.Rank == CardRank.Ace
@@ -63,7 +63,7 @@ namespace Poker
                 || card.Rank == CardRank.Jack
                 || card.Rank == CardRank.Ten).ToList();
 
-                if(RoyalFlushTest.Count() == 5)
+                if (RoyalFlushTest.Count() == 5)
                 {
                     return true;
                 }
@@ -141,24 +141,109 @@ namespace Poker
 
         public static bool StraightFlushCheck(List<Card> PlayerHand)
         {
-            PlayerHand = PlayerHand.OrderBy(x => x.Suit).ThenBy(x => x.Rank).ToList();
+            return false;
+        }
 
+        public static bool FourOfAKindCheck(List<Card> PlayerHand)
+        {
+            var AceList = PlayerHand.Where(card => card.Rank == CardRank.Ace).ToList();
+            var TwoList = PlayerHand.Where(card => card.Rank == CardRank.Two).ToList();
+            var ThreeList = PlayerHand.Where(card => card.Rank == CardRank.Three).ToList();
+            var FourList = PlayerHand.Where(card => card.Rank == CardRank.Four).ToList();
+            var FiveList = PlayerHand.Where(card => card.Rank == CardRank.Five).ToList();
+            var SixList = PlayerHand.Where(card => card.Rank == CardRank.Six).ToList();
+            var SevenList = PlayerHand.Where(card => card.Rank == CardRank.Seven).ToList();
+            var EightList = PlayerHand.Where(card => card.Rank == CardRank.Eight).ToList();
+            var NineList = PlayerHand.Where(card => card.Rank == CardRank.Nine).ToList();
+            var TenList = PlayerHand.Where(card => card.Rank == CardRank.Ten).ToList();
+            var JackList = PlayerHand.Where(card => card.Rank == CardRank.Jack).ToList();
+            var QueenList = PlayerHand.Where(card => card.Rank == CardRank.Queen).ToList();
+            var KingList = PlayerHand.Where(card => card.Rank == CardRank.King).ToList();
+
+            if (AceList.Count() == 4 ||
+                TwoList.Count() == 4 ||
+                ThreeList.Count() == 4 ||
+                FourList.Count() == 4 ||
+                FiveList.Count() == 4 ||
+                SixList.Count() == 4 ||
+                SevenList.Count() == 4 ||
+                EightList.Count() == 4 ||
+                NineList.Count() == 4 ||
+                TenList.Count() == 4 ||
+                JackList.Count() == 4 ||
+                QueenList.Count() == 4 ||
+                KingList.Count() == 4)
+            {
+                return true;
+            }
+
+            else
+            {
+                return false;
+            }
+
+        }
+
+        public static bool FullHouseCheck(List<Card> PlayerHand)
+        {
             foreach (Card card in PlayerHand)
             {
                 Console.WriteLine("{0} of {1}", card.Rank, card.Suit);
             }
 
-            Console.WriteLine();
-            Console.WriteLine();
+            bool trple = false;
 
-            var DiamondsList = PlayerHand.Where(s => s.Suit == CardSuit.Diamonds).ToList();
-            var HeartsList = PlayerHand.Where(s => s.Suit == CardSuit.Hearts).ToList();
-            var ClubsList = PlayerHand.Where(s => s.Suit == CardSuit.Clubs).ToList();
-            var SpadesList = PlayerHand.Where(s => s.Suit == CardSuit.Spades).ToList();
+            foreach (CardRank rank in Enum.GetValues(typeof(CardRank)))
+            {
+                var x = from card in PlayerHand
+                        where card.Rank == rank
+                        select card;
 
+                var z = x.ToList();
+                int y = x.ToList().Count();
+                Console.WriteLine(y);
+                
 
+                if (y == 3)
+                {
+                    trple = true;
+                    PlayerHand.RemoveAll(card => card.Rank == rank);
+                    foreach (Card card in PlayerHand)
+                    {
+                        Console.WriteLine("{0} of {1}", card.Rank, card.Suit);
+                    }
+                    break;
+                }
+            }
 
-            return false;
+            bool dble = false;
+
+            foreach (CardRank rank in Enum.GetValues(typeof(CardRank)))
+            {
+                var x = from card in PlayerHand
+                        where card.Rank == rank
+                        select card;
+
+                var z = x.ToList();
+                int y = x.ToList().Count();
+                Console.WriteLine(y);
+                
+                if (y == 2)
+                {
+                    dble = true;
+                    break;
+                }
+            }
+
+            if (dble && trple)
+            {
+                return true;
+            }
+
+            else
+            {
+                return false;
+            }   
         }
     }
 }
