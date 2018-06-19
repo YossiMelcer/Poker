@@ -11,7 +11,11 @@ namespace Poker
 
             Deck deck = new Deck();
 
-            Game game = new Game();
+            //Game game = new Game();
+
+            CalculateWinner calc = new CalculateWinner();
+
+            Console.ReadKey();
             
         }
 

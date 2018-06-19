@@ -30,7 +30,7 @@ namespace Poker
 
         private void CreateDeck()
         {
-            foreach (CardSuit suit in Enum.GetValues(typeof(CardSuit)))
+            foreach (CardSuit suit in Enum.GetValues(typeof(CardSuit)))             
             {
                 foreach (CardRank rank in Enum.GetValues(typeof(CardRank)))
                 {
