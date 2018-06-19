@@ -33,7 +33,7 @@ namespace Poker
             PlayerHand.Add(card6);
             PlayerHand.Add(card7);
 
-            FullHouseCheck(PlayerHand);
+            StraightCheck(PlayerHand);
         }
 
 
@@ -199,10 +199,8 @@ namespace Poker
                         where card.Rank == rank
                         select card;
 
-                var z = x.ToList();
                 int y = x.ToList().Count();
                 Console.WriteLine(y);
-                
 
                 if (y == 3)
                 {
@@ -224,10 +222,9 @@ namespace Poker
                         where card.Rank == rank
                         select card;
 
-                var z = x.ToList();
                 int y = x.ToList().Count();
                 Console.WriteLine(y);
-                
+
                 if (y == 2)
                 {
                     dble = true;
@@ -243,7 +240,44 @@ namespace Poker
             else
             {
                 return false;
-            }   
+            }
+        }
+
+        public static bool FlushCheck(List<Card> PlayerHand)
+        {
+            var DiamondsList = PlayerHand.Where(s => s.Suit == CardSuit.Diamonds).ToList();
+            var HeartsList = PlayerHand.Where(s => s.Suit == CardSuit.Hearts).ToList();
+            var ClubsList = PlayerHand.Where(s => s.Suit == CardSuit.Clubs).ToList();
+            var SpadesList = PlayerHand.Where(s => s.Suit == CardSuit.Spades).ToList();
+
+            if (DiamondsList.Count() >= 5 ||
+               HeartsList.Count() >= 5 ||
+               ClubsList.Count() >= 5 ||
+               SpadesList.Count() >= 5)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public static bool StraightCheck(List<Card> PlayerHand)
+        {
+            foreach (Card card in PlayerHand)
+            {
+                Console.WriteLine("{0} of {1}", card.Rank, card.Suit);
+            }
+
+            int count = 0;
+            for (int i = 0; i < PlayerHand.Count(); i++)
+            {
+                var adjacent_list = PlayerHand.Where(card => card.Rank ==  card.Rank[i+1])
+
+
+            }
+            Console.WriteLine(count);
+
+            return false;
         }
     }
 }
