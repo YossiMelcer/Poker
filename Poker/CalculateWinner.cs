@@ -25,13 +25,20 @@ namespace Poker
             Card card7 = deck1.DrawCardFromDeck();
 
             List<Card> PlayerHand = new List<Card>();
-            PlayerHand.Add(card1);
-            PlayerHand.Add(card2);
-            PlayerHand.Add(card3);
-            PlayerHand.Add(card4);
-            PlayerHand.Add(card5);
-            PlayerHand.Add(card6);
-            PlayerHand.Add(card7);
+            PlayerHand.Add(new Card(CardSuit.Clubs, CardRank.Ace));
+            PlayerHand.Add(new Card(CardSuit.Hearts, CardRank.Two));
+            PlayerHand.Add(new Card(CardSuit.Clubs, CardRank.Three));
+            PlayerHand.Add(new Card(CardSuit.Diamonds, CardRank.Four));
+            PlayerHand.Add(new Card(CardSuit.Diamonds, CardRank.Five));
+            PlayerHand.Add(new Card(CardSuit.Spades, CardRank.Ten));
+            PlayerHand.Add(new Card(CardSuit.Spades, CardRank.Jack));
+            //PlayerHand.Add(card1);
+            //PlayerHand.Add(card2);
+            //PlayerHand.Add(card3);
+            //PlayerHand.Add(card4);
+            //PlayerHand.Add(card5);
+            //PlayerHand.Add(card6);
+            //PlayerHand.Add(card7);
 
             StraightCheck(PlayerHand);
         }
@@ -191,56 +198,21 @@ namespace Poker
                 Console.WriteLine("{0} of {1}", card.Rank, card.Suit);
             }
 
-            bool trple = false;
+            Dictionary<CardRank, List<Card>> groupedCards = PlayerHand.GroupBy(card => card.Rank).ToDictionary(group => group.Key, group => group.ToList());
 
-            foreach (CardRank rank in Enum.GetValues(typeof(CardRank)))
+            groupedCards.ToList().ForEach(x => Console.WriteLine(x.Key));
+
+            var containsTriple = groupedCards.Any(a => a.Value.Count == 3);
+            var containsPair = groupedCards.Any(a => a.Value.Count == 2);
+
+            if (containsTriple && containsPair)
             {
-                var x = from card in PlayerHand
-                        where card.Rank == rank
-                        select card;
-
-                int y = x.ToList().Count();
-                Console.WriteLine(y);
-
-                if (y == 3)
-                {
-                    trple = true;
-                    PlayerHand.RemoveAll(card => card.Rank == rank);
-                    foreach (Card card in PlayerHand)
-                    {
-                        Console.WriteLine("{0} of {1}", card.Rank, card.Suit);
-                    }
-                    break;
-                }
-            }
-
-            bool dble = false;
-
-            foreach (CardRank rank in Enum.GetValues(typeof(CardRank)))
-            {
-                var x = from card in PlayerHand
-                        where card.Rank == rank
-                        select card;
-
-                int y = x.ToList().Count();
-                Console.WriteLine(y);
-
-                if (y == 2)
-                {
-                    dble = true;
-                    break;
-                }
-            }
-
-            if (dble && trple)
-            {
+                Console.WriteLine("Full House");
                 return true;
             }
 
-            else
-            {
-                return false;
-            }
+            return false;
+
         }
 
         public static bool FlushCheck(List<Card> PlayerHand)
@@ -263,21 +235,51 @@ namespace Poker
 
         public static bool StraightCheck(List<Card> PlayerHand)
         {
-            foreach (Card card in PlayerHand)
+            List<CardRank> uniqueRanks = PlayerHand
+                .Select(card => card.Rank)
+                .OrderBy(rank => rank)
+                .ToList();
+
+            foreach (CardRank rank in uniqueRanks)
             {
-                Console.WriteLine("{0} of {1}", card.Rank, card.Suit);
+                Console.WriteLine("{0}", rank);
             }
 
-            int count = 0;
-            for (int i = 0; i < PlayerHand.Count(); i++)
+           
+            int straightCount = 1;
+
+            for (int i = 0; i <= uniqueRanks.Count - 2; i++)
             {
-                var adjacent_list = PlayerHand.Where(card => card.Rank ==  card.Rank[i+1])
+                if (straightCount == 5)
+                    break;
 
+                Console.WriteLine(straightCount);
 
+                int currentRankValue = (int)uniqueRanks[i];
+                
+                if ((int)uniqueRanks[i + 1] - currentRankValue == 1)
+                    straightCount++;
+                
+                else if (currentRankValue == 2 && (int)uniqueRanks[i + 1] == 14)
+                    straightCount++;
+
+                else if (currentRankValue - (int)uniqueRanks[i + 1] > 1)
+                    straightCount = 1;
             }
-            Console.WriteLine(count);
 
-            return false;
+            Console.WriteLine();
+            Console.WriteLine(straightCount);
+
+            if (straightCount == 5)
+            {
+                Console.WriteLine("straight");
+                return true;
+            }
+
+            else
+            {
+                return false;
+            }
         }
     }
 }

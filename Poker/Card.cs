@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Poker
 {
-    public enum CardRank { Ace = 1, Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten, Jack, Queen, King };
+    public enum CardRank { Two = 2, Three, Four, Five, Six, Seven, Eight, Nine, Ten, Jack, Queen, King, Ace };
 
     public enum CardSuit { Diamonds = 1, Hearts, Clubs, Spades };
 
