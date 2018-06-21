@@ -26,9 +26,9 @@ namespace Poker
 
             List<Card> PlayerHand = new List<Card>();
             PlayerHand.Add(new Card(CardSuit.Clubs, CardRank.Ace));
-            PlayerHand.Add(new Card(CardSuit.Hearts, CardRank.Two));
+            PlayerHand.Add(new Card(CardSuit.Hearts, CardRank.Three));
             PlayerHand.Add(new Card(CardSuit.Clubs, CardRank.Three));
-            PlayerHand.Add(new Card(CardSuit.Diamonds, CardRank.Four));
+            PlayerHand.Add(new Card(CardSuit.Diamonds, CardRank.Five));
             PlayerHand.Add(new Card(CardSuit.Diamonds, CardRank.Five));
             PlayerHand.Add(new Card(CardSuit.Spades, CardRank.Ten));
             PlayerHand.Add(new Card(CardSuit.Spades, CardRank.Jack));
@@ -40,7 +40,7 @@ namespace Poker
             //PlayerHand.Add(card6);
             //PlayerHand.Add(card7);
 
-            StraightCheck(PlayerHand);
+            PairCheck(PlayerHand);
         }
 
 
@@ -148,6 +148,9 @@ namespace Poker
 
         public static bool StraightFlushCheck(List<Card> PlayerHand)
         {
+            if (FlushCheck(PlayerHand) && StraightCheck(PlayerHand))
+                return true;
+
             return false;
         }
 
@@ -235,12 +238,12 @@ namespace Poker
 
         public static bool StraightCheck(List<Card> PlayerHand)
         {
-            List<CardRank> uniqueRanks = PlayerHand
+            List<CardRank> groupedCards = PlayerHand
                 .Select(card => card.Rank)
                 .OrderBy(rank => rank)
                 .ToList();
 
-            foreach (CardRank rank in uniqueRanks)
+            foreach (CardRank rank in groupedCards)
             {
                 Console.WriteLine("{0}", rank);
             }
@@ -248,22 +251,22 @@ namespace Poker
            
             int straightCount = 1;
 
-            for (int i = 0; i <= uniqueRanks.Count - 2; i++)
+            for (int i = 0; i <= groupedCards.Count - 2; i++)
             {
                 if (straightCount == 5)
                     break;
 
                 Console.WriteLine(straightCount);
 
-                int currentRankValue = (int)uniqueRanks[i];
+                int currentRankValue = (int)groupedCards[i];
                 
-                if ((int)uniqueRanks[i + 1] - currentRankValue == 1)
+                if ((int)groupedCards[i + 1] - currentRankValue == 1)
                     straightCount++;
                 
-                else if (currentRankValue == 2 && (int)uniqueRanks[i + 1] == 14)
+                else if (currentRankValue == 2 && (int)groupedCards[i + 1] == 14)
                     straightCount++;
 
-                else if (currentRankValue - (int)uniqueRanks[i + 1] > 1)
+                else if (currentRankValue - (int)groupedCards[i + 1] > 1)
                     straightCount = 1;
             }
 
@@ -280,6 +283,112 @@ namespace Poker
             {
                 return false;
             }
+        }
+
+        public static bool ThreeOfAKindCheck(List<Card> PlayerHand)
+        {
+            foreach (Card card in PlayerHand)
+            {
+                Console.WriteLine("{0} of {1}", card.Rank, card.Suit);
+            }
+
+            Dictionary<CardRank, List<Card>> groupedCards = PlayerHand.GroupBy(card => card.Rank).ToDictionary(group => group.Key, group => group.ToList());
+
+            groupedCards.ToList().ForEach(x => Console.WriteLine(x.Key));
+
+            var containsTriple = groupedCards.Any(a => a.Value.Count == 3);
+
+            if (containsTriple)
+                return true;
+
+            return false;
+        }
+
+        public static bool TwoPairCheck(List<Card> PlayerHand)
+        {
+            foreach (Card card in PlayerHand)
+            {
+                Console.WriteLine("{0} of {1}", card.Rank, card.Suit);
+            }
+
+            List<CardRank> groupedCards = PlayerHand
+                .Select(card => card.Rank)
+                .OrderBy(rank => rank)
+                .ToList();
+
+            bool firstPair = false;
+
+            CardRank foundPairRank = CardRank.Ace;
+
+            for(int i = 0; i <= groupedCards.Count() - 1; i++)
+            {
+                for(int j = 0; j <= groupedCards.Count() - 1; j++)
+                {
+                    if (j == i)
+                        continue;
+                    if (groupedCards[i] == groupedCards[j])
+                    {
+                        firstPair = true;
+                        foundPairRank = groupedCards[i];
+                        break;
+                    }
+                }
+            }
+
+            Console.WriteLine(firstPair);
+
+            Console.WriteLine(foundPairRank);
+
+            groupedCards.RemoveAll(a => a == foundPairRank);
+
+            foreach (CardRank rank in groupedCards)
+            {
+                Console.WriteLine(rank);
+            }
+
+            bool secondPair = false;
+
+            for (int i = 0; i <= groupedCards.Count() - 1; i++)
+            {
+                for (int j = 0; j <= groupedCards.Count() - 1; j++)
+                {
+                    if (j == i)
+                        continue;
+                    if (groupedCards[i] == groupedCards[j])
+                    {
+                        secondPair = true;
+                        
+                        break;
+                    }
+                }
+            }
+            
+            if (firstPair && secondPair)
+            {
+                Console.WriteLine("Two Pair");
+                return true;
+            }
+
+            return false;
+        }
+
+        public static bool PairCheck(List<Card> PlayerHand)
+        {
+            foreach (Card card in PlayerHand)
+            {
+                Console.WriteLine("{0} of {1}", card.Rank, card.Suit);
+            }
+
+            Dictionary<CardRank, List<Card>> groupedCards = PlayerHand.GroupBy(card => card.Rank).ToDictionary(group => group.Key, group => group.ToList());
+
+            groupedCards.ToList().ForEach(x => Console.WriteLine(x.Key));
+
+            var containsPair = groupedCards.Any(a => a.Value.Count == 2);
+
+            if (containsPair)
+                return true;
+
+            return false;
         }
     }
 }
