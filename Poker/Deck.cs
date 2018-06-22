@@ -10,7 +10,7 @@ namespace Poker
         public List<Card> ListOfCards { get; set; }
 
         public int CurrentCard { get; private set; }
-
+        
 
         public Deck()
         {
@@ -30,7 +30,7 @@ namespace Poker
 
         private void CreateDeck()
         {
-            foreach (CardSuit suit in Enum.GetValues(typeof(CardSuit)))             
+            foreach (CardSuit suit in Enum.GetValues(typeof(CardSuit)))
             {
                 foreach (CardRank rank in Enum.GetValues(typeof(CardRank)))
                 {
@@ -39,7 +39,7 @@ namespace Poker
                 }
             }
         }
-        
+
 
         private void Shuffle()
         {
@@ -53,13 +53,13 @@ namespace Poker
                 ListOfCards[i] = tmp;
             }
 
-            foreach(Card item in ListOfCards)
-            {
-                Console.WriteLine("{0} of {1}", item.Rank, item.Suit);
-            }
+            //foreach(Card item in ListOfCards)
+            //{
+            //    Console.WriteLine("{0} of {1}", item.Rank, item.Suit);
+            //}
 
-            Console.WriteLine();
-            Console.WriteLine();
+            //Console.WriteLine();
+            //Console.WriteLine();
 
         }
     }

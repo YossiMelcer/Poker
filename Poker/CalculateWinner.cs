@@ -15,15 +15,7 @@ namespace Poker
         private void DummyHand()
         {
             Deck deck1 = new Deck();
-
-            Card card1 = deck1.DrawCardFromDeck();
-            Card card2 = deck1.DrawCardFromDeck();
-            Card card3 = deck1.DrawCardFromDeck();
-            Card card4 = deck1.DrawCardFromDeck();
-            Card card5 = deck1.DrawCardFromDeck();
-            Card card6 = deck1.DrawCardFromDeck();
-            Card card7 = deck1.DrawCardFromDeck();
-
+            
             List<Card> PlayerHand = new List<Card>();
             PlayerHand.Add(new Card(CardSuit.Clubs, CardRank.Ace));
             PlayerHand.Add(new Card(CardSuit.Hearts, CardRank.Three));
@@ -32,14 +24,7 @@ namespace Poker
             PlayerHand.Add(new Card(CardSuit.Diamonds, CardRank.Five));
             PlayerHand.Add(new Card(CardSuit.Spades, CardRank.Ten));
             PlayerHand.Add(new Card(CardSuit.Spades, CardRank.Jack));
-            //PlayerHand.Add(card1);
-            //PlayerHand.Add(card2);
-            //PlayerHand.Add(card3);
-            //PlayerHand.Add(card4);
-            //PlayerHand.Add(card5);
-            //PlayerHand.Add(card6);
-            //PlayerHand.Add(card7);
-
+            
             PairCheck(PlayerHand);
         }
 
@@ -156,41 +141,21 @@ namespace Poker
 
         public static bool FourOfAKindCheck(List<Card> PlayerHand)
         {
-            var AceList = PlayerHand.Where(card => card.Rank == CardRank.Ace).ToList();
-            var TwoList = PlayerHand.Where(card => card.Rank == CardRank.Two).ToList();
-            var ThreeList = PlayerHand.Where(card => card.Rank == CardRank.Three).ToList();
-            var FourList = PlayerHand.Where(card => card.Rank == CardRank.Four).ToList();
-            var FiveList = PlayerHand.Where(card => card.Rank == CardRank.Five).ToList();
-            var SixList = PlayerHand.Where(card => card.Rank == CardRank.Six).ToList();
-            var SevenList = PlayerHand.Where(card => card.Rank == CardRank.Seven).ToList();
-            var EightList = PlayerHand.Where(card => card.Rank == CardRank.Eight).ToList();
-            var NineList = PlayerHand.Where(card => card.Rank == CardRank.Nine).ToList();
-            var TenList = PlayerHand.Where(card => card.Rank == CardRank.Ten).ToList();
-            var JackList = PlayerHand.Where(card => card.Rank == CardRank.Jack).ToList();
-            var QueenList = PlayerHand.Where(card => card.Rank == CardRank.Queen).ToList();
-            var KingList = PlayerHand.Where(card => card.Rank == CardRank.King).ToList();
-
-            if (AceList.Count() == 4 ||
-                TwoList.Count() == 4 ||
-                ThreeList.Count() == 4 ||
-                FourList.Count() == 4 ||
-                FiveList.Count() == 4 ||
-                SixList.Count() == 4 ||
-                SevenList.Count() == 4 ||
-                EightList.Count() == 4 ||
-                NineList.Count() == 4 ||
-                TenList.Count() == 4 ||
-                JackList.Count() == 4 ||
-                QueenList.Count() == 4 ||
-                KingList.Count() == 4)
+            foreach (Card card in PlayerHand)
             {
+                Console.WriteLine("{0} of {1}", card.Rank, card.Suit);
+            }
+
+            Dictionary<CardRank, List<Card>> groupedCards = PlayerHand.GroupBy(card => card.Rank).ToDictionary(group => group.Key, group => group.ToList());
+
+            groupedCards.ToList().ForEach(x => Console.WriteLine(x.Key));
+
+            var containsFourOfAKind = groupedCards.Any(a => a.Value.Count == 4);
+
+            if (containsFourOfAKind)
                 return true;
-            }
 
-            else
-            {
-                return false;
-            }
+            return false;
 
         }
 

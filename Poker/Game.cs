@@ -12,19 +12,13 @@ namespace Poker
         public List<Card> CommunityCardsList { get; set; }
         
         public Deck deck { get; set; }
-
-        string Player_1 = "Player 1";
-        string Player_2 = "Player 2";
-
+        
         public Game()
         {
             Players = new List<Player>();
 
             CommunityCardsList = new List<Card>();
-
-            Players.Add(new Player(Player_1));
-            Players.Add(new Player(Player_2));
-
+            
             Deck deck = new Deck();
         }
 
