@@ -7,7 +7,7 @@ namespace Poker
 {
     class CalculateWinner
     {
-        public CalculateWinner()
+        public CalculateWinner(List<Card> PlayerHand)
         {
             DummyHand();
         }

@@ -19,7 +19,7 @@ namespace Poker
 
             CommunityCardsList = new List<Card>();
             
-            Deck deck = new Deck();
+            deck = new Deck();
         }
 
         public void DealCards()
@@ -31,7 +31,7 @@ namespace Poker
             }
         }
 
-        public void CommunityCards()
+        public void DealCommunityCards()
         {
             CommunityCardsList.Add(deck.DrawCardFromDeck());
             CommunityCardsList.Add(deck.DrawCardFromDeck());
