@@ -22,12 +22,12 @@ namespace Poker
 
             Console.WriteLine("Enter no. of players");
             int PlayerNumber = Convert.ToInt32(Console.ReadLine());
-           
+
             for (int i = 1; i <= PlayerNumber; i++)
             {
                 game.Players.Add(new Player("Player " + i));
             }
-            
+
             game.DealCards();
             game.Players.ToList();
 
@@ -35,7 +35,7 @@ namespace Poker
             {
                 Console.WriteLine(player.Name);
                 Console.WriteLine(player.Chips);
-                
+
                 foreach (Card card in player.Hand)
                 {
                     Console.WriteLine("{0} of {1}", card.Rank, card.Suit);
@@ -103,7 +103,7 @@ namespace Poker
             {
                 Console.WriteLine("{0} of {1}", card.Rank, card.Suit);
             }
-            
+
             Console.WriteLine();
 
             for (int i = 0; i < game.Players.Count; i++)
@@ -111,14 +111,14 @@ namespace Poker
                 if (!game.Players[i].IsInRound)
                     continue;
 
-                Console.WriteLine("Player {0} Choose:", i+1);
+                Console.WriteLine("Player {0} Choose:", i + 1);
                 Console.WriteLine();
                 Console.WriteLine("1. Fold");
                 Console.WriteLine();
                 Console.WriteLine("2. Check");
                 Console.WriteLine();
                 Console.WriteLine("3. Raise");
-                  
+
                 int choice = Convert.ToInt32(Console.ReadLine());
 
                 switch (choice)
@@ -146,7 +146,7 @@ namespace Poker
                 }
             }
 
-            
+
             Console.WriteLine("Second round of betting over");
             Console.WriteLine();
             Console.WriteLine("Current amount in the pot:");
@@ -266,20 +266,51 @@ namespace Poker
                     default:
                         Console.WriteLine("Invalid number");
                         break;
-                }   
+                }
             }
-            
+
             Console.WriteLine("Fourth round of betting over");
             Console.WriteLine();
+            
+            var AllHands = new List<List<Card>>();
 
-            //CalculateWinner calc = new CalculateWinner();
+            for(int i = 0; i < game.Players.Count; i++)
+            {
+                if (!game.Players[i].IsInRound)
+                    continue;
 
-            var List1 = game.CommunityCardsList.Concat(game.Players[0].Hand);
-            List1.ToList();
+                AllHands.Append(new List<Card>());
+            }
 
+            for (int i = 0; i < AllHands.Count; i++)
+            {
+                if (!game.Players[i].IsInRound)
+                    continue;
+
+                AllHands[i] = game.CommunityCardsList.Concat(game.Players[i].Hand).ToList();
+
+            }
+
+            foreach (List<Card> list in AllHands)
+            {
+                foreach (Card card in list)
+                {
+                    Console.WriteLine("{0} of {1}", card.Rank, card.Suit);
+                }
+            }
+
+            //List<Card> List2 = new List<Card>();
+            //List2 = List1.ToList();
+
+            //foreach (Card card in List2)
+            //{
+            //    Console.WriteLine("{0} of {1}", card.Rank, card.Suit);
+            //}
+
+            //Console.WriteLine(CalculateWinner.CompareHands(List2));
             
             Console.ReadKey();
+            
         }
-    } 
+    }
 }
- 

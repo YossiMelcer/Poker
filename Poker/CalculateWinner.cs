@@ -7,44 +7,72 @@ namespace Poker
 {
     class CalculateWinner
     {
-        public CalculateWinner(List<Card> CombinationHand)
+        public CalculateWinner()
         {
-            RoyalFlushCheck(CombinationHand);
-            StraightFlushCheck(CombinationHand);
-            FourOfAKindCheck(CombinationHand);
-            FullHouseCheck(CombinationHand);
-            FlushCheck(CombinationHand);
-            StraightCheck(CombinationHand);
-            ThreeOfAKindCheck(CombinationHand);
-            TwoPairCheck(CombinationHand);
-            PairCheck(CombinationHand);
         }
 
-        private void DummyHand()
+        public static int CompareHands(List<Card> CombinationHand)
         {
-            Deck deck1 = new Deck();
-            
-            List<Card> PlayerHand = new List<Card>();
-            PlayerHand.Add(new Card(CardSuit.Clubs, CardRank.Ace));
-            PlayerHand.Add(new Card(CardSuit.Hearts, CardRank.Three));
-            PlayerHand.Add(new Card(CardSuit.Clubs, CardRank.Three));
-            PlayerHand.Add(new Card(CardSuit.Diamonds, CardRank.Five));
-            PlayerHand.Add(new Card(CardSuit.Diamonds, CardRank.Five));
-            PlayerHand.Add(new Card(CardSuit.Spades, CardRank.Ten));
-            PlayerHand.Add(new Card(CardSuit.Spades, CardRank.Jack));
-            
-            PairCheck(PlayerHand);
-        }
+            if (RoyalFlushCheck(CombinationHand))
+            {
+                return 9;
+            }
 
+            else if (StraightFlushCheck(CombinationHand))
+            {
+                return 8;
+            }
+
+            else if (FourOfAKindCheck(CombinationHand))
+            {
+                return 7;
+            }
+
+            else if (FullHouseCheck(CombinationHand))
+            {
+                return 6;
+            }
+
+            else if (FlushCheck(CombinationHand))
+            {
+                return 5;
+            }
+
+            else if (StraightCheck(CombinationHand))
+            {
+                return 4;
+            }
+
+            else if (ThreeOfAKindCheck(CombinationHand))
+            {
+                return 3;
+            }
+
+            else if (TwoPairCheck(CombinationHand))
+            {
+                return 2;
+            }
+
+            else if (PairCheck(CombinationHand))
+            {
+                return 1;
+            }
+
+            else
+            {
+                return 0;
+            }
+        }
+        
 
         public static bool RoyalFlushCheck(List<Card> PlayerHand)
         {
             PlayerHand = PlayerHand.OrderBy(x => x.Suit).ThenBy(x => x.Rank).ToList();
 
-            foreach (Card card in PlayerHand)
-            {
-                Console.WriteLine("{0} of {1}", card.Rank, card.Suit);
-            }
+            //foreach (Card card in PlayerHand)
+            //{
+            //    Console.WriteLine("{0} of {1}", card.Rank, card.Suit);
+            //}
 
             Console.WriteLine();
             Console.WriteLine();
@@ -149,10 +177,10 @@ namespace Poker
 
         public static bool FourOfAKindCheck(List<Card> PlayerHand)
         {
-            foreach (Card card in PlayerHand)
-            {
-                Console.WriteLine("{0} of {1}", card.Rank, card.Suit);
-            }
+            //foreach (Card card in PlayerHand)
+            //{
+            //    Console.WriteLine("{0} of {1}", card.Rank, card.Suit);
+            //}
 
             Dictionary<CardRank, List<Card>> groupedCards = PlayerHand.GroupBy(card => card.Rank).ToDictionary(group => group.Key, group => group.ToList());
 
@@ -169,10 +197,10 @@ namespace Poker
 
         public static bool FullHouseCheck(List<Card> PlayerHand)
         {
-            foreach (Card card in PlayerHand)
-            {
-                Console.WriteLine("{0} of {1}", card.Rank, card.Suit);
-            }
+            //foreach (Card card in PlayerHand)
+            //{
+            //    Console.WriteLine("{0} of {1}", card.Rank, card.Suit);
+            //}
 
             Dictionary<CardRank, List<Card>> groupedCards = PlayerHand.GroupBy(card => card.Rank).ToDictionary(group => group.Key, group => group.ToList());
 
@@ -183,7 +211,7 @@ namespace Poker
 
             if (containsTriple && containsPair)
             {
-                Console.WriteLine("Full House");
+               // Console.WriteLine("Full House");
                 return true;
             }
 
@@ -216,10 +244,10 @@ namespace Poker
                 .OrderBy(rank => rank)
                 .ToList();
 
-            foreach (CardRank rank in groupedCards)
-            {
-                Console.WriteLine("{0}", rank);
-            }
+            //foreach (CardRank rank in groupedCards)
+            //{
+            //    Console.WriteLine("{0}", rank);
+            //}
 
            
             int straightCount = 1;
@@ -229,7 +257,7 @@ namespace Poker
                 if (straightCount == 5)
                     break;
 
-                Console.WriteLine(straightCount);
+               // Console.WriteLine(straightCount);
 
                 int currentRankValue = (int)groupedCards[i];
                 
@@ -243,12 +271,12 @@ namespace Poker
                     straightCount = 1;
             }
 
-            Console.WriteLine();
-            Console.WriteLine(straightCount);
+            //Console.WriteLine();
+            //Console.WriteLine(straightCount);
 
             if (straightCount == 5)
             {
-                Console.WriteLine("straight");
+               // Console.WriteLine("straight");
                 return true;
             }
 
@@ -260,10 +288,10 @@ namespace Poker
 
         public static bool ThreeOfAKindCheck(List<Card> PlayerHand)
         {
-            foreach (Card card in PlayerHand)
-            {
-                Console.WriteLine("{0} of {1}", card.Rank, card.Suit);
-            }
+            //foreach (Card card in PlayerHand)
+            //{
+            //    Console.WriteLine("{0} of {1}", card.Rank, card.Suit);
+            //}
 
             Dictionary<CardRank, List<Card>> groupedCards = PlayerHand.GroupBy(card => card.Rank).ToDictionary(group => group.Key, group => group.ToList());
 
@@ -279,10 +307,10 @@ namespace Poker
 
         public static bool TwoPairCheck(List<Card> PlayerHand)
         {
-            foreach (Card card in PlayerHand)
-            {
-                Console.WriteLine("{0} of {1}", card.Rank, card.Suit);
-            }
+            //foreach (Card card in PlayerHand)
+            //{
+            //    Console.WriteLine("{0} of {1}", card.Rank, card.Suit);
+            //}
 
             List<CardRank> groupedCards = PlayerHand
                 .Select(card => card.Rank)
@@ -308,16 +336,16 @@ namespace Poker
                 }
             }
 
-            Console.WriteLine(firstPair);
+           // Console.WriteLine(firstPair);
 
-            Console.WriteLine(foundPairRank);
+            //Console.WriteLine(foundPairRank);
 
             groupedCards.RemoveAll(a => a == foundPairRank);
 
-            foreach (CardRank rank in groupedCards)
-            {
-                Console.WriteLine(rank);
-            }
+            //foreach (CardRank rank in groupedCards)
+            //{
+            //    Console.WriteLine(rank);
+            //}
 
             bool secondPair = false;
 
@@ -338,7 +366,7 @@ namespace Poker
             
             if (firstPair && secondPair)
             {
-                Console.WriteLine("Two Pair");
+               // Console.WriteLine("Two Pair");
                 return true;
             }
 
@@ -347,10 +375,10 @@ namespace Poker
 
         public static bool PairCheck(List<Card> PlayerHand)
         {
-            foreach (Card card in PlayerHand)
-            {
-                Console.WriteLine("{0} of {1}", card.Rank, card.Suit);
-            }
+            //foreach (Card card in PlayerHand)
+            //{
+            //    Console.WriteLine("{0} of {1}", card.Rank, card.Suit);
+            //}
 
             Dictionary<CardRank, List<Card>> groupedCards = PlayerHand.GroupBy(card => card.Rank).ToDictionary(group => group.Key, group => group.ToList());
 
