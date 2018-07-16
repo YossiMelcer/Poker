@@ -7,9 +7,17 @@ namespace Poker
 {
     class CalculateWinner
     {
-        public CalculateWinner(List<Card> PlayerHand)
+        public CalculateWinner(List<Card> CombinationHand)
         {
-            DummyHand();
+            RoyalFlushCheck(CombinationHand);
+            StraightFlushCheck(CombinationHand);
+            FourOfAKindCheck(CombinationHand);
+            FullHouseCheck(CombinationHand);
+            FlushCheck(CombinationHand);
+            StraightCheck(CombinationHand);
+            ThreeOfAKindCheck(CombinationHand);
+            TwoPairCheck(CombinationHand);
+            PairCheck(CombinationHand);
         }
 
         private void DummyHand()

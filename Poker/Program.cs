@@ -108,6 +108,9 @@ namespace Poker
 
             for (int i = 0; i < game.Players.Count; i++)
             {
+                if (!game.Players[i].IsInRound)
+                    continue;
+
                 Console.WriteLine("Player {0} Choose:", i+1);
                 Console.WriteLine();
                 Console.WriteLine("1. Fold");
@@ -271,8 +274,11 @@ namespace Poker
 
             //CalculateWinner calc = new CalculateWinner();
 
-            Console.ReadKey();
+            var List1 = game.CommunityCardsList.Concat(game.Players[0].Hand);
+            List1.ToList();
 
+            
+            Console.ReadKey();
         }
     } 
 }
