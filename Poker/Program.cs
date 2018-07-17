@@ -279,7 +279,7 @@ namespace Poker
                 if (!game.Players[i].IsInRound)
                     continue;
 
-                AllHands.Append(new List<Card>());
+                AllHands.Add(new List<Card>());
             }
 
             for (int i = 0; i < AllHands.Count; i++)
@@ -297,6 +297,7 @@ namespace Poker
                 {
                     Console.WriteLine("{0} of {1}", card.Rank, card.Suit);
                 }
+                Console.WriteLine();
             }
 
             //List<Card> List2 = new List<Card>();
